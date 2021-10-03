@@ -1,0 +1,30 @@
+
+
+<div class="wholePage">
+  <div class="box">
+
+
+      <form>
+        <h1> Please Log In </h1>
+        <div class="form-outline mb-4">
+          <input type="email" [(ngModel)]="username" name="username"  id="username" class="form-control" />
+          <label class="form-label" for="username">Username</label>
+          <h4> {{valuejson}} </h4>
+        </div>
+
+        <div class="form-outline mb-4">
+          <input type="email" [(ngModel)]="email" name="email"  id="email" class="form-control" />
+          <label class="form-label" for="email">Email</label>
+        </div>
+
+        <button type="submit" (click)="insertProduct()" class="btn btn-primary btn-block">CHANGE </button>
+        <button type="submit" (click)="change()" class="btn btn-primary btn-block">BACK </button>
+      </form>
+
+
+    </div>
+  </div>
+
+
+
+

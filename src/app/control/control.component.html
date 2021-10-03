@@ -1,0 +1,39 @@
+<div class="box">
+  <h1 class="centers"> User Control  </h1>
+  <div class="container">
+    <div id="intro">
+
+
+
+      <h2> Users</h2>
+          <table>
+            <tr *ngFor="let prod of prods; let i= index">
+              <td> {{prod.name}}</td>
+              <td> {{prod.email}}</td>
+              <td>
+              <form >
+                <h1> </h1>
+                <select (change)="updateProduct(prod.name,role[i])" [(ngModel)]="role[i]" [ngModelOptions]="{standalone: true}" name="{{role[i]}}" id="{{role[i]}}">
+                  <option value="superAdmin">superAdmin</option>
+                  <option value="Admin">Admin</option>
+                  <option value="user">User</option>
+                </select>
+              </form>
+
+              </td>
+              <button (click)="deleteProduct(prod)"> DELETE </button>
+            </tr>
+          </table>
+
+
+      <button (click) ="upProduct()"> BACK</button>
+<button (click) ="back()"> BACK</button>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+

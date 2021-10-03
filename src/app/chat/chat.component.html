@@ -1,0 +1,50 @@
+
+<div id="intro">
+
+  <div class="box">
+
+    <h1 class="realCenter"> CHAT ROOM </h1>
+
+
+    <div class="container">
+      <button id="button"  (click)="createRoom()"> ADMIN </button>
+      <button id="buttonTwo" (click)="sendMessage()" > CONTROL  </button>
+      <button class="buttonThree" (click)="logOut()"> LOGOUT </button>
+      <p> {{manageMessage}}</p>
+
+      <form>
+        <select class="buttonOne" [(ngModel)]="roomlist" (click)="changeList()"  id="roomlist" name="roomlist">
+          <option *ngFor="let message of listDBS"> {{message.value}} </option>
+        </select>
+
+      </form>
+
+<h4> {{roomlist}}</h4>
+
+
+      <form>
+        <input [(ngModel)]="value" name='value' id='value'>
+      </form>
+
+      <br>
+      <button (click)="insertProduct()"> ADD </button>
+      <table>
+        <tr *ngFor = "let prod of prods">
+          <Td> {{prod.value}}</Td>
+          <Td> {{prod._id}}</Td>
+
+          <button (click)="deleteProduct(prod)"> EDIT </button>
+        </tr>
+      </table>
+
+
+      <div>
+        <div ng *ngFor="let message of roomArray"> {{message}}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+

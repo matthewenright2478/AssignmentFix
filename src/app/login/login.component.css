@@ -1,0 +1,49 @@
+.wholePage{
+  background-image:url(../login/SNkE0X.jpg);
+  width:100%;
+  height:100vh;
+
+}
+
+
+.centers{
+  background-color:black;
+  font-size:20px;
+  color:white;
+  font-align:center;
+  text-align:center;
+  align-content: center;
+  align-items:center;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.realCenter{
+  text-align:center;
+
+}
+
+
+
+
+
+.box{
+  align-items: center;
+  position: relative;               /* 2 */
+  top: 25%;
+  left:0%;
+  height:30vh;
+  width:75vh;
+  background-color:white;
+  align-content: center;
+  margin: auto;
+  padding: 10px;
+  border: 10px solid black;
+  font-size:25px;
+  background-image:url(../login/basic.png)
+}
+
+
+
+

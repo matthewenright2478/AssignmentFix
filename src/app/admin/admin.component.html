@@ -1,0 +1,30 @@
+
+<div id="intro">
+
+  <div class="box">
+
+    <h1 class="realCenter"> CHAT ROOM </h1>
+
+
+    <div class="container">
+      <form>
+        <input [(ngModel)]="value" name='value' id='value'>
+      </form>
+
+     <button id="button"  (click)="sendMessage()"> BACK </button>
+      <button (click)="updateProduct(prods)"> EDIT </button>
+      <button (click)="insertProduct()"> ADD </button>
+      <table>
+        <tr *ngFor = "let prod of prods">
+          <Td> {{prod.value}}</Td>
+          <Td> {{prod._id}}</Td>
+
+          <button (click)="deleteProduct(prod)"> DELETE </button>
+        </tr>
+      </table>
+
+
+
+    </div>
+  </div>
+</div>
