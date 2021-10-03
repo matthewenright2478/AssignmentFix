@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router'
-import { TestComponent } from './test/test.component'
+import {ChatComponent} from "./chat/chat.component";
+import {LoginComponent} from "./login/login.component";
+import {CreateaccountComponent} from "./createaccount/createaccount.component";
+import {AdminComponent} from "./admin/admin.component";
 
-const routes:Routes = [{path:"",component: TestComponent}]
+const routes:Routes = [{path:"create",component: CreateaccountComponent},{path:"",component: ChatComponent},{path:"login",component: LoginComponent},
+  {path:"admin",component: AdminComponent}]
 
 
 

@@ -1,0 +1,35 @@
+
+<div class="wholePage">
+
+  <div class="box">
+
+
+
+    <div class="container">
+
+
+
+
+      <form>
+
+        <h1> Please Log In </h1>
+        <div class="form-outline mb-100">
+          <input type="email" [(ngModel)]="firstName" name="firstName"  id="firstName" class="form-control" />
+          <label class="form-label" for="firstName"></label>
+        </div>
+
+
+
+        <button (click)=" getProfile()" class="btn btn-primary btn-block">Create </button>
+
+        <!-- Submit button -->
+        <button type="submit" (click)="setItem()" class="btn btn-primary btn-block">SUBMIT </button>
+        <div> <h3> {{check}} Please try again </h3> </div>
+      </form>
+    </div>
+
+  </div>
+
+
+
+</div>

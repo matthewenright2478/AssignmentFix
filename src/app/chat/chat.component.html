@@ -1,0 +1,44 @@
+
+<div id="intro">
+
+  <div class="box">
+
+    <h1 class="realCenter"> CHAT ROOM </h1>
+
+    <div class="container">
+      <button id="button"  (click)="createRoom()"> ADD ROOM </button>
+      <button id="buttonTwo" (click)="sendMessage()" > ADMIN  </button>
+      <button class="buttonThree" (click)="logOut()"> LOGOUT </button>
+      <p> {{manageMessage}}</p>
+
+      <form>
+        <input type="text" [(ngModel)]="roomCreate" id="roomCreate" name="roomCreate">
+
+        <h1> {{roomCreate}}</h1>
+      </form>
+
+      <br>
+      <form>
+        <select class="buttonOne" [(ngModel)]="roomSend"   id="roomSend" name="roomSend">
+          <option *ngFor="let message of roomArray"> {{message}} </option>
+        </select>
+
+      </form>
+
+
+      <form>
+        <div class="form-group">
+          <label> Room Message </label>
+          <input type="text" [(ngModel)]="roomName"  name="roomName" id="roomName" class="form-control"/>
+          <h4> Message sent to room is named {{roomName}}</h4>
+        </div>
+      </form>
+
+
+      <div>
+        <div ng *ngFor="let message of roomArray"> {{message}}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
