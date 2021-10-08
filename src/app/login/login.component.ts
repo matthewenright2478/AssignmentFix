@@ -50,6 +50,8 @@ export class LoginComponent implements OnInit {
     for (let i=0;i < this.prods.length; i++){
       if (this.prods[i].name == this.firstName && this.prods[i].email == this.email){
         this.router.navigateByUrl('')
+        localStorage.user = this.firstName
+
 
       }
     }

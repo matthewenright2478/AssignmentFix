@@ -34,7 +34,7 @@ export class ControlComponent implements OnInit {
   role:any[] = []
   listName = 'list'
   listDBS!:ProdModel[];
-
+  user:any;
 
   constructor(private dataService: DataService,private prodService: ClientService, private router: Router) { }
 
@@ -73,6 +73,7 @@ export class ControlComponent implements OnInit {
 
     this.prodService.productUpdate(current,neww,this.colName).subscribe(data => {
       console.log(data)
+      this.getProducts()
 
   })
     this.getProducts()

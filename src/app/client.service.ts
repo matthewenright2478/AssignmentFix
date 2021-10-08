@@ -19,6 +19,7 @@ export class ClientService {
     arrayValue.message = prod
     arrayValue.col = colName
 
+
     this.http.post(this.url + 'products', arrayValue)
     return this.http.post(this.url + 'products', arrayValue)
   }
@@ -31,6 +32,14 @@ export class ClientService {
     arrayValue.col = colName
     return this.http.post(this.url + 'productFind',arrayValue);
   }
+
+  productFindChannels(colName:any,channel:any) {
+    let arrayValue:any = {}
+    arrayValue.col = colName
+    arrayValue.channel = channel
+    return this.http.post(this.url + 'productFind',arrayValue);
+  }
+
 
 
 

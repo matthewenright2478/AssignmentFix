@@ -7,20 +7,38 @@
 
 
     <div class="container">
-      <button id="button"  (click)="createRoom()"> ADMIN </button>
-      <button id="buttonTwo" (click)="sendMessage()" > CONTROL  </button>
-      <button class="buttonThree" (click)="logOut()"> LOGOUT </button>
-      <p> {{manageMessage}}</p>
 
-      <form>
-        <select class="buttonOne" [(ngModel)]="roomlist" (click)="changeList()"  id="roomlist" name="roomlist">
+      <h3 class="realCenter"> Welcome {{user}}</h3>
+   <span class="buttons">
+      <button class="buttonThree" (click)="createRoom()"> ADMIN </button>
+     </span>
+      <span class="buttons">
+        <form>
+          <select class="selector" [(ngModel)]="roomlist" (change)="changeList()"  id="roomlist" name="roomlist">
+          <option>Default</option>
           <option *ngFor="let message of listDBS"> {{message.value}} </option>
         </select>
+        </form>
+      </span>
+      <span class="buttons">
+        <form>
+          <select class="selector" [(ngModel)]="channelList"  (change)="changeChannel()" id="channelList" name="channelList">
+          <option>Channel</option>
+            <option *ngFor="let message of channels"> {{message}} </option>
+        </select>
+        </form>
+      </span>
 
-      </form>
+      <span class="buttonsRight">
+      <button class="buttonThree" (click)="sendMessage()" > CONTROL  </button>
+      <button class="buttonThree" (click)="logOut()"> LOGOUT </button>
+      </span>
+      <p> {{manageMessage}}</p>
+
+    <br>
+      <br>
 
 <h4> {{roomlist}}</h4>
-
 
       <form>
         <input [(ngModel)]="value" name='value' id='value'>
@@ -28,12 +46,13 @@
 
       <br>
       <button (click)="insertProduct()"> ADD </button>
-      <table>
+      <table style="width: 100%">
         <tr *ngFor = "let prod of prods">
-          <Td> {{prod.value}}</Td>
-          <Td> {{prod._id}}</Td>
+          <Td colspan="1"  style="width: 10%"> {{prod.user}}</Td>
+          <Td colspan="2" style="width: 80%"> {{prod.value}}</Td>
+          <Td colspan="1" style="width: 10%"> {{prod.channel}}</Td>
 
-          <button (click)="deleteProduct(prod)"> EDIT </button>
+          <button (click)="deleteProduct(prod)"> DELETE</button>
         </tr>
       </table>
 

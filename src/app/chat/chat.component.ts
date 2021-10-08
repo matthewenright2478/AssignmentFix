@@ -24,19 +24,24 @@ export class ChatComponent implements OnInit {
   checkROLE:any;
   manageMessage:any;
   roomArray:any[]=[];
-  colName = 'list'
+  colName = 'Default'
   prods!:any;
   roomlist:any;
   value:any;
   role:any;
   listName = 'list'
   listDBS!:any;
-
+  user:any;
+  channels = ["1","2","3","4","5","6","7","8","9","10"]
+  channelList="1"
 
   constructor(private dataService: DataService,private prodService: ClientService, private router: Router) { }
 
   ngOnInit(): void {
+    this.user = localStorage.getItem('user')
+    this.colName='Default'
     this.getList()
+    this.getProducts()
   }
 
 
@@ -57,7 +62,7 @@ export class ChatComponent implements OnInit {
 
 
   getProducts(): void {
-    this.prodService.productFind(this.colName).subscribe(data => {
+    this.prodService.productFindChannels(this.colName,this.channelList).subscribe(data => {
       this.prods = data;
     })
   }
@@ -68,6 +73,10 @@ export class ChatComponent implements OnInit {
     })
   }
 
+  changeChannel(){
+    this.getProducts()
+  }
+
   changeList():void {
     this.colName = String(this.roomlist)
     this.getProducts()
@@ -75,8 +84,11 @@ export class ChatComponent implements OnInit {
 
 
 
+
+
+
   insertProduct():void {
-    this.prodService.productInsert({value: this.value, valueTwo: this.value},this.colName).subscribe(data => {
+    this.prodService.productInsert({value: this.value, valueTwo: this.value,user:this.user,channel:this.channelList},this.colName).subscribe(data => {
       this.getProducts()
 
     })
