@@ -31,11 +31,12 @@ export class ChatComponent implements OnInit {
   role:any;
   listName = 'list'
   listDBS!:any;
-
+  user:any;
 
   constructor(private dataService: DataService,private prodService: ClientService, private router: Router) { }
 
   ngOnInit(): void {
+    this.user = localStorage.getItem('user')
     this.getList()
   }
 
@@ -76,7 +77,7 @@ export class ChatComponent implements OnInit {
 
 
   insertProduct():void {
-    this.prodService.productInsert({value: this.value, valueTwo: this.value},this.colName).subscribe(data => {
+    this.prodService.productInsert({value: this.value, valueTwo: this.value,user:this.user},this.colName).subscribe(data => {
       this.getProducts()
 
     })

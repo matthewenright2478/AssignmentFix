@@ -1,19 +1,16 @@
 
-<div id="intro">
+<div class="box">
+  <h1 class="centers"> User Control  </h1>
+  <div class="container">
+    <div id="intro">
 
-  <div class="box">
 
-    <h1 class="realCenter"> CHAT ROOM </h1>
-
-
-    <div class="container">
       <form>
         <input [(ngModel)]="value" name='value' id='value'>
+        <button (click)="insertProduct()"> ADD </button>
       </form>
 
      <button id="button"  (click)="sendMessage()"> BACK </button>
-      <button (click)="updateProduct(prods)"> EDIT </button>
-      <button (click)="insertProduct()"> ADD </button>
       <table>
         <tr *ngFor = "let prod of prods">
           <Td> {{prod.value}}</Td>
@@ -24,7 +21,7 @@
       </table>
 
 
-
-    </div>
   </div>
 </div>
+</div>
+

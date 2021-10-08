@@ -130,6 +130,22 @@
 }
 
 
+tr {
+  border-bottom: 1px solid #ddd;
+}
 
-
+td {
+  width:50%;
+  align-items:center;
+  height:0.5%;
+  border: 2px solid black;
+}
+th {
+  width:5%;
+  border: 5px solid #ddd
+}
+.btn-bot {
+  position: absolute;
+  bottom: -100%;
+}
 

@@ -7,13 +7,38 @@
 
 
     <div class="container">
-      <button id="button"  (click)="createRoom()"> ADMIN </button>
-      <button id="buttonTwo" (click)="sendMessage()" > CONTROL  </button>
+
+      <h3 class="realCenter"> Welcome {{user}}</h3>
+   <span class="buttons">
+      <button class="buttonThree" (click)="createRoom()"> ADMIN </button>
+        <form class="buttonThree">
+        <select>
+          <option value="0">Select Room</option>
+          <option value="1">Audi</option>
+          <option value="2">BMW</option>
+          <option value="3">Citroen</option>
+          <option value="4">Ford</option>
+          <option value="5">Honda</option>
+          <option value="6">Jaguar</option>
+          <option value="7">Land Rover</option>
+          <option value="8">Mercedes</option>
+          <option value="9">Mini</option>
+          <option value="10">Nissan</option>
+          <option value="11">Toyota</option>
+          <option value="12">Volvo</option>
+        </select>
+        </form>
+      </span>
+
+      <span class="buttonsRight">
+      <button class="buttonThree" (click)="sendMessage()" > CONTROL  </button>
       <button class="buttonThree" (click)="logOut()"> LOGOUT </button>
+      </span>
       <p> {{manageMessage}}</p>
 
       <form>
         <select class="buttonOne" [(ngModel)]="roomlist" (click)="changeList()"  id="roomlist" name="roomlist">
+          <option>Default Room </option>
           <option *ngFor="let message of listDBS"> {{message.value}} </option>
         </select>
 
@@ -28,10 +53,10 @@
 
       <br>
       <button (click)="insertProduct()"> ADD </button>
-      <table>
+      <table style="width: 100%">
         <tr *ngFor = "let prod of prods">
-          <Td> {{prod.value}}</Td>
-          <Td> {{prod._id}}</Td>
+          <Td colspan="1"  style="width: 20%"> {{prod.user}}</Td>
+          <Td colspan="2" style="width: 80%"> {{prod.value}}</Td>
 
           <button (click)="deleteProduct(prod)"> EDIT </button>
         </tr>
