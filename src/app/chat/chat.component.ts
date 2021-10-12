@@ -5,6 +5,7 @@ import {Observable,of } from 'rxjs';
 import {Router} from "@angular/router";
 import {ClientService} from "../client.service";
 import {ProdModel} from "../prodModel";
+import { SocketsService } from '../sockets.service'
 
 @Component({
   selector: 'app-chat',
@@ -33,15 +34,38 @@ export class ChatComponent implements OnInit {
   listDBS!:any;
   user:any;
   channels = ["1","2","3","4","5","6","7","8","9","10"]
-  channelList="1"
+  channelList:any="1"
+  testSocketsObject:any;
+  testSocketsData:any;
+  valueResult:any
+  type:any;
 
-  constructor(private dataService: DataService,private prodService: ClientService, private router: Router) { }
+  valueMessage:any;
+  valuess:any[] = [];
+
+
+
+
+  constructor(private dataService: DataService,private prodService: ClientService, private router: Router,private socket: SocketsService) { }
 
   ngOnInit(): void {
     this.user = localStorage.getItem('user')
     this.colName='Default'
     this.getList()
+    this.socket.initSocket();
     this.getProducts()
+    this.socket.getMessages().subscribe(m => {
+      this.valueMessage = m
+      this.valuess.push(m);})
+    this.socket.createChannel("RoomONe")
+    //this.socket.send("too")
+    this.socket.getMessage()
+
+    let arrayValue:any = {}
+    this.colName
+
+    this.channelList
+    this.socket.send("too", this.colName, this.channelList)
   }
 
 
@@ -81,9 +105,6 @@ export class ChatComponent implements OnInit {
     this.colName = String(this.roomlist)
     this.getProducts()
   }
-
-
-
 
 
 
