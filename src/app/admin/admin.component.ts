@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { ClientService } from '../client.service'
 import {ProdModel} from "../prodModel";
-
+import { SocketsService } from '../sockets.service'
 
 @Component({
   selector: 'app-admin',
@@ -17,25 +17,33 @@ export class AdminComponent implements OnInit {
   value:any;
   test:any[] = []
   colName:any = "list"
-  constructor(private prodService: ClientService, private router: Router) { }
+  listArray:any[] = []
+  listValue:any[] = []
+  constructor(private socket: SocketsService, private prodService: ClientService, private router: Router) { }
 
 
   ngOnInit(): void {
+    this.socket.initSocket();
     this.getProducts();
   }
 
   getProducts(): void {
-    this.prodService.productFind(this.colName).subscribe(data => {
-      this.prods = data;
-    })
-  }
 
-  insertProduct():void {
-    this.prodService.productInsert({value: this.value, valueTwo: this.value},this.colName).subscribe(data => {
-      this.getProducts()
+    this.socket.getlist().subscribe(m => {
+      while(this.listArray.length) {
+        this.listArray.pop();
+      }
+      while(this.listValue.length){
+        this.listValue.pop();
+      }
+      this.listArray.push(m)
+      console.log(m)
+      console.log("This list message is", this.listArray[0].length)
+      for (let i = 0; i < this.listArray[0].length; i++) {
 
+        this.listValue.push(this.listArray[0][i])
+      }
     })
-    this.getProducts()
   }
 
   sendMessage(){
@@ -43,11 +51,17 @@ export class AdminComponent implements OnInit {
   }
 
 
+
+  insertProduct():void {
+    this.socket.add({value: this.value, valueTwo: this.value},this.colName)
+    this.getProducts()
+  }
+
+
   deleteProduct(product: ProdModel){
-    this.prodService.productDelete({value: product.value},this.colName)
+    this.socket.productDelete({value: product.value},this.colName)
     this.getProducts()
   };
-
   updateProduct(product: ProdModel[]){
     localStorage.removeItem('product');
     // @ts-ignore

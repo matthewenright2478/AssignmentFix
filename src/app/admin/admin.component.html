@@ -12,9 +12,9 @@
 
      <button id="button"  (click)="sendMessage()"> BACK </button>
       <table>
-        <tr *ngFor = "let prod of prods">
+        <tr *ngFor = "let prod of listValue">
           <Td> {{prod.value}}</Td>
-          <Td> {{prod._id}}</Td>
+
 
           <button (click)="deleteProduct(prod)"> DELETE </button>
         </tr>

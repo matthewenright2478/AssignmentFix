@@ -27,7 +27,7 @@ export class ChatComponent implements OnInit {
   roomArray:any[]=[];
   colName = 'Default'
   prods!:any;
-  roomlist:any;
+  roomlist = "Default";
   value:any;
   role:any;
   listName = 'list'
@@ -39,33 +39,24 @@ export class ChatComponent implements OnInit {
   testSocketsData:any;
   valueResult:any
   type:any;
-
-  valueMessage:any;
-  valuess:any[] = [];
-
-
-
-
+  rabbits:any[]=[]
+  valueMessage: object | undefined;
+  valuess = {}
+  valu:any[]=[]
+  listArray:any[] = []
+  listValue:any[] = []
+  imageFull:any;
+  imageName:any
+  image:any;
   constructor(private dataService: DataService,private prodService: ClientService, private router: Router,private socket: SocketsService) { }
 
   ngOnInit(): void {
     this.user = localStorage.getItem('user')
-    this.colName='Default'
-    this.getList()
+    this.imageName = localStorage.getItem('image')
     this.socket.initSocket();
+    this.getList()
     this.getProducts()
-    this.socket.getMessages().subscribe(m => {
-      this.valueMessage = m
-      this.valuess.push(m);})
-    this.socket.createChannel("RoomONe")
-    //this.socket.send("too")
-    this.socket.getMessage()
-
-    let arrayValue:any = {}
-    this.colName
-
-    this.channelList
-    this.socket.send("too", this.colName, this.channelList)
+    this.imageFull = "../../assets/" + this.imageName
   }
 
 
@@ -85,20 +76,40 @@ export class ChatComponent implements OnInit {
   }
 
 
+
   getProducts(): void {
-    this.prodService.productFindChannels(this.colName,this.channelList).subscribe(data => {
-      this.prods = data;
+
+    this.socket.getMessages(this.colName, this.channelList).subscribe(m => {
+      this.rabbits = []
+      this.valu = []
+      this.rabbits.push(m)
+
+      for (let i = 0; i < this.rabbits[0].length; i++) {
+
+        this.valu.push(this.rabbits[0][i])
+      }
     })
   }
 
   getList(): void {
-    this.prodService.productFind(this.listName).subscribe(data => {
-      this.listDBS = data;
+
+    this.socket.getlist().subscribe(m => {
+      this.listArray = []
+      this.listValue = []
+      this.listArray.push(m)
+
+      for (let i = 0; i < this.listArray[0].length; i++) {
+
+        this.listValue.push(this.listArray[0][i])
+      }
     })
+    this.colName = String(this.roomlist)
+    this.getProducts()
   }
 
   changeChannel(){
     this.getProducts()
+
   }
 
   changeList():void {
@@ -107,27 +118,16 @@ export class ChatComponent implements OnInit {
   }
 
 
-
   insertProduct():void {
-    this.prodService.productInsert({value: this.value, valueTwo: this.value,user:this.user,channel:this.channelList},this.colName).subscribe(data => {
-      this.getProducts()
-
-    })
+    this.socket.add({value: this.value, valueTwo: this.value,user:this.user,image:this.imageName,channel:this.channelList},this.colName)
     this.getProducts()
   }
 
 
   deleteProduct(product: ProdModel){
-    this.prodService.productDelete({value: product.value},this.colName)
+    this.socket.productDelete({value: product.value},this.colName)
     this.getProducts()
   };
 
-  updateProduct(product: ProdModel[]){
-    localStorage.removeItem('product');
-    // @ts-ignore
-    delete product._id;
-    localStorage.setItem('product',JSON.stringify(product));
-
-  }
 
 }
