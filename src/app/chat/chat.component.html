@@ -1,31 +1,32 @@
 
 <div id="intro">
-
   <div class="box">
-
     <h1 class="realCenter"> CHAT ROOM </h1>
-
+    <h1> The role is {{role}} </h1>
 
     <div class="container">
 
-      <h3 class="realCenter"> Welcome {{user}}</h3>
+      <h3 class="realCenter"> Welcome {{user}}  <img height='30' width='30' src='{{imageFull}}'></h3>
    <span class="buttons">
       <button class="buttonThree" (click)="createRoom()"> ADMIN </button>
-        <form class="buttonThree">
-        <select>
-          <option value="0">Select Room</option>
-          <option value="1">Audi</option>
-          <option value="2">BMW</option>
-          <option value="3">Citroen</option>
-          <option value="4">Ford</option>
-          <option value="5">Honda</option>
-          <option value="6">Jaguar</option>
-          <option value="7">Land Rover</option>
-          <option value="8">Mercedes</option>
-          <option value="9">Mini</option>
-          <option value="10">Nissan</option>
-          <option value="11">Toyota</option>
-          <option value="12">Volvo</option>
+     </span>
+
+      <span class="buttons">
+        <form>
+          <select class="selector" [(ngModel)]="roomlist" (change)="getList()"  selected="roomlist" id="roomlist" name="roomlist">
+
+
+             <option>Default</option>
+
+          <option *ngFor="let message of listValue" [value]="message.value"> {{message.value}} </option>
+        </select>
+        </form>
+      </span>
+      <span class="buttons">
+        <form>
+          <select class="selector" [(ngModel)]="channelList"  (change)="changeChannel()" id="channelList" name="channelList">
+          <option>Channel</option>
+            <option *ngFor="let message of channels"> {{message}} </option>
         </select>
         </form>
       </span>
@@ -34,42 +35,39 @@
       <button class="buttonThree" (click)="sendMessage()" > CONTROL  </button>
       <button class="buttonThree" (click)="logOut()"> LOGOUT </button>
       </span>
-      <p> {{manageMessage}}</p>
 
-      <form>
-        <select class="buttonOne" [(ngModel)]="roomlist" (click)="changeList()"  id="roomlist" name="roomlist">
-          <option>Default Room </option>
-          <option *ngFor="let message of listDBS"> {{message.value}} </option>
-        </select>
 
-      </form>
+    <br>
+      <br>
 
-<h4> {{roomlist}}</h4>
+<br>
+
+
 
 
       <form>
-        <input [(ngModel)]="value" name='value' id='value'>
+        <input class="search" [(ngModel)]="value" name='value' id='value'>
       </form>
 
       <br>
+
       <button (click)="insertProduct()"> ADD </button>
       <table style="width: 100%">
-        <tr *ngFor = "let prod of prods">
-          <Td colspan="1"  style="width: 20%"> {{prod.user}}</Td>
-          <Td colspan="2" style="width: 80%"> {{prod.value}}</Td>
 
-          <button (click)="deleteProduct(prod)"> EDIT </button>
+        <tr *ngFor = "let prod of valu">
+
+          <td colspan="1"  style="width: 90%"> <img height='45' width='50' src="../../assets/{{prod.image}}"> {{prod.user}} saids {{prod.value}} </td>
+          <td colspan="1" style="width: 10%"> {{prod.channel}}</td>
+
+          <button (click)="deleteProduct(prod)"> DELETE</button>
         </tr>
       </table>
 
 
-      <div>
-        <div ng *ngFor="let message of roomArray"> {{message}}
-      </div>
     </div>
   </div>
 </div>
-</div>
+
 
 
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { ProdModel, account} from './prodModel'
+import { SocketsService } from './sockets.service'
 
 import { Observable} from 'rxjs';
 @Injectable({
@@ -10,7 +11,7 @@ export class ClientService {
 
   url = 'http://localhost:3000/';
   account!:account[];
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private socket: SocketsService) {
   }
 
   productInsert(prod:any,colName:any) {
@@ -18,6 +19,7 @@ export class ClientService {
     let arrayValue:any = {}
     arrayValue.message = prod
     arrayValue.col = colName
+
 
     this.http.post(this.url + 'products', arrayValue)
     return this.http.post(this.url + 'products', arrayValue)
@@ -31,6 +33,15 @@ export class ClientService {
     arrayValue.col = colName
     return this.http.post(this.url + 'productFind',arrayValue);
   }
+
+  productFindChannels(colName:any,channel:any) {
+    let arrayValue:any = {}
+    arrayValue.col = colName
+    arrayValue.channel = channel
+    console.log("arrayValue isss,",arrayValue.col,arrayValue.channel)
+    return this.http.post(this.url + 'productFind',arrayValue);
+  }
+
 
 
 

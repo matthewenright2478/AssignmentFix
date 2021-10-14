@@ -5,6 +5,7 @@ import {Observable,of } from 'rxjs';
 import {Router} from "@angular/router";
 import {ClientService} from "../client.service";
 import {ProdModel} from "../prodModel";
+import { SocketsService } from '../sockets.service'
 
 @Component({
   selector: 'app-chat',
@@ -16,86 +17,118 @@ export class ChatComponent implements OnInit {
   messagecontent: string = "";
   messages: string[] = [];
   roomName: any;
-  roomSend: any;
   roomCreate: any;
-  messageValues:any[]=[]
-  nameArray:any[]=[];
-  mess:any;
-  checkROLE:any;
-  manageMessage:any;
-  roomArray:any[]=[];
-  colName = 'list'
-  prods!:any;
-  roomlist:any;
-  value:any;
-  role:any;
+  messageValues: any[] = []
+  nameArray: any[] = [];
+  mess: any;
+  checkROLE: any;
+  roomArray: any[] = [];
+  colName = 'Default'
+  prods!: any;
+  roomlist = "Default";
+  value: any;
+  role: any;
   listName = 'list'
-  listDBS!:any;
-  user:any;
+  listDBS!: any;
+  user: any;
+  channels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+  channelList: any = "1"
+  valueResult: any
+  type: any;
+  rabbits: any[] = []
+  valueMessage: object | undefined;
+  valuess = {}
+  valu: any[] = []
+  listArray: any[] = []
+  listValue: any[] = []
+  imageFull: any;
+  imageName: any
+  image: any;
 
-  constructor(private dataService: DataService,private prodService: ClientService, private router: Router) { }
+  constructor(private dataService: DataService, private prodService: ClientService, private router: Router, private socket: SocketsService) {
+  }
 
   ngOnInit(): void {
     this.user = localStorage.getItem('user')
+    this.imageName = localStorage.getItem('image')
+    this.socket.initSocket();
     this.getList()
+    this.getProducts()
+    this.imageFull = "../../assets/" + this.imageName
+    this.getRole()
   }
 
 
-
-  createRoom(){
-    this.router.navigateByUrl('/admin')
+  createRoom() {
+    if (this.role == "Admin" || this.role == "superAdmin") {
+      this.router.navigateByUrl('/admin')
+    }
   }
 
 
-  sendMessage(){
-    this.router.navigateByUrl('/control')
+  sendMessage() {
+    if (this.role == "superAdmin") {
+      this.router.navigateByUrl('/control')
+    }
   }
 
-
-  logOut():void{
+  logOut(): void {
     this.router.navigateByUrl('/login')
   }
 
 
   getProducts(): void {
-    this.prodService.productFind(this.colName).subscribe(data => {
-      this.prods = data;
+    this.socket.getMessages(this.colName, this.channelList).subscribe((m: any) => {
+      this.valu = m
     })
   }
 
   getList(): void {
-    this.prodService.productFind(this.listName).subscribe(data => {
-      this.listDBS = data;
+    this.socket.getlist().subscribe((m: any) => {
+      this.listValue = m
     })
+    this.colName = String(this.roomlist)
+    this.getProducts()
   }
 
-  changeList():void {
+  changeChannel() {
+    this.getProducts()
+
+  }
+
+  changeList(): void {
     this.colName = String(this.roomlist)
     this.getProducts()
   }
 
 
-
-  insertProduct():void {
-    this.prodService.productInsert({value: this.value, valueTwo: this.value,user:this.user},this.colName).subscribe(data => {
-      this.getProducts()
-
-    })
+  insertProduct(): void {
+    this.socket.add({
+      value: this.value,
+      valueTwo: this.value,
+      user: this.user,
+      image: this.imageName,
+      channel: this.channelList
+    }, this.colName)
     this.getProducts()
   }
 
 
-  deleteProduct(product: ProdModel){
-    this.prodService.productDelete({value: product.value},this.colName)
+  deleteProduct(product: ProdModel) {
+    this.socket.productDelete({value: product.value}, this.colName)
     this.getProducts()
   };
 
-  updateProduct(product: ProdModel[]){
-    localStorage.removeItem('product');
-    // @ts-ignore
-    delete product._id;
-    localStorage.setItem('product',JSON.stringify(product));
 
+  getRole(): void {
+    this.socket.getuser().subscribe((m: any) => {
+      for (let p = 0; p < m.length; p++) {
+        if (m[p].name == this.user) {
+          this.role = m[p].role.toString()
+
+        }
+      }
+    })
   }
-
 }
+

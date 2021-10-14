@@ -5,6 +5,8 @@ import {Observable,of } from 'rxjs';
 import {Router} from "@angular/router";
 import {ClientService} from "../client.service";
 import {ProdModel,account} from "../prodModel";
+import { SocketsService } from '../sockets.service'
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-createaccount',
@@ -16,39 +18,40 @@ export class CreateaccountComponent implements OnInit {
   Name:any;
   password:any;
   username:any;
-  AGE:any;
-  testTwo:any;
   message:any;
-  testing:any[] = []
-  testingTwo:any;
-  testingThree:any;
-  testingFour:any;
   valuejson:any
   email:any;
-  value:any;
   colName = "user"
+  images = ['bird.jpg','cute.jpg','dolphin.jpg','fox.jpg','tiger.jpg']
+  imageName:any;
+  imageFull:any;
   prods!:account[];
-  constructor(private dataService: DataService,private prodService: ClientService, private router: Router) { }
+  constructor(private socket: SocketsService,private dataService: DataService,private prodService: ClientService, private router: Router,private https:HttpClientModule) { }
 
-
+  // Initiates the connection to socket and defines the message //
   ngOnInit(): void {
-
+    this.socket.initSocket();
+  this.message = "Please type in your details"
   }
 
 
+  // Function that takes in the users data and inserts it into the mongoDB users collection //
   insertProduct():void {
-    console.log("success")
-    this.prodService.productInsert({name: this.username, email: this.email,role:"user"},this.colName).subscribe(data => {
-
-    })
-
+    this.socket.add({name: this.username, email: this.email,image:this.imageName,role:"user"},this.colName)
+    this.message = "Account Created"
   }
 
-  change(){
-    //this.bookService.changeUsername(this.username);
-    //this.bookService.changePassword(this.password);
+  // Goes back to the login page //
+  back(){
     this.router.navigateByUrl('/login')
   }
+
+  // Convert the selected image name into a link //
+  imageChange():any {
+    this.imageFull = "../../assets/" + this.imageName
+    return this.imageFull
+  }
+
 
 
 }
