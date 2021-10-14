@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
-
+import { HttpClient } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { ChatComponent } from './chat/chat.component';
 import {FormsModule} from "@angular/forms";
@@ -19,14 +19,17 @@ import { ControlComponent } from './control/control.component';
     AdminComponent,
     CreateaccountComponent,
     ControlComponent
+
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+
+
   ],
-  providers: [HttpClientModule],
+  providers: [HttpClientModule,HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,6 +2,7 @@
 <div id="intro">
   <div class="box">
     <h1 class="realCenter"> CHAT ROOM </h1>
+    <h1> The role is {{role}} </h1>
 
     <div class="container">
 
@@ -55,8 +56,8 @@
 
         <tr *ngFor = "let prod of valu">
 
-          <Td colspan="1"  style="width: 90%"> <img height='30' width='30' src="../../assets/{{prod.image}}"> {{prod.user}} saids {{prod.value}} </Td>
-          <Td colspan="1" style="width: 10%"> {{prod.channel}}</Td>
+          <td colspan="1"  style="width: 90%"> <img height='45' width='50' src="../../assets/{{prod.image}}"> {{prod.user}} saids {{prod.value}} </td>
+          <td colspan="1" style="width: 10%"> {{prod.channel}}</td>
 
           <button (click)="deleteProduct(prod)"> DELETE</button>
         </tr>

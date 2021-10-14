@@ -17,38 +17,36 @@ export class ChatComponent implements OnInit {
   messagecontent: string = "";
   messages: string[] = [];
   roomName: any;
-  roomSend: any;
   roomCreate: any;
-  messageValues:any[]=[]
-  nameArray:any[]=[];
-  mess:any;
-  checkROLE:any;
-  manageMessage:any;
-  roomArray:any[]=[];
+  messageValues: any[] = []
+  nameArray: any[] = [];
+  mess: any;
+  checkROLE: any;
+  roomArray: any[] = [];
   colName = 'Default'
-  prods!:any;
+  prods!: any;
   roomlist = "Default";
-  value:any;
-  role:any;
+  value: any;
+  role: any;
   listName = 'list'
-  listDBS!:any;
-  user:any;
-  channels = ["1","2","3","4","5","6","7","8","9","10"]
-  channelList:any="1"
-  testSocketsObject:any;
-  testSocketsData:any;
-  valueResult:any
-  type:any;
-  rabbits:any[]=[]
+  listDBS!: any;
+  user: any;
+  channels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+  channelList: any = "1"
+  valueResult: any
+  type: any;
+  rabbits: any[] = []
   valueMessage: object | undefined;
   valuess = {}
-  valu:any[]=[]
-  listArray:any[] = []
-  listValue:any[] = []
-  imageFull:any;
-  imageName:any
-  image:any;
-  constructor(private dataService: DataService,private prodService: ClientService, private router: Router,private socket: SocketsService) { }
+  valu: any[] = []
+  listArray: any[] = []
+  listValue: any[] = []
+  imageFull: any;
+  imageName: any
+  image: any;
+
+  constructor(private dataService: DataService, private prodService: ClientService, private router: Router, private socket: SocketsService) {
+  }
 
   ngOnInit(): void {
     this.user = localStorage.getItem('user')
@@ -57,77 +55,80 @@ export class ChatComponent implements OnInit {
     this.getList()
     this.getProducts()
     this.imageFull = "../../assets/" + this.imageName
+    this.getRole()
   }
 
 
-
-  createRoom(){
-    this.router.navigateByUrl('/admin')
+  createRoom() {
+    if (this.role == "Admin" || this.role == "superAdmin") {
+      this.router.navigateByUrl('/admin')
+    }
   }
 
 
-  sendMessage(){
-    this.router.navigateByUrl('/control')
+  sendMessage() {
+    if (this.role == "superAdmin") {
+      this.router.navigateByUrl('/control')
+    }
   }
 
-
-  logOut():void{
+  logOut(): void {
     this.router.navigateByUrl('/login')
   }
 
 
-
   getProducts(): void {
-
-    this.socket.getMessages(this.colName, this.channelList).subscribe(m => {
-      this.rabbits = []
-      this.valu = []
-      this.rabbits.push(m)
-
-      for (let i = 0; i < this.rabbits[0].length; i++) {
-
-        this.valu.push(this.rabbits[0][i])
-      }
+    this.socket.getMessages(this.colName, this.channelList).subscribe((m: any) => {
+      this.valu = m
     })
   }
 
   getList(): void {
-
-    this.socket.getlist().subscribe(m => {
-      this.listArray = []
-      this.listValue = []
-      this.listArray.push(m)
-
-      for (let i = 0; i < this.listArray[0].length; i++) {
-
-        this.listValue.push(this.listArray[0][i])
-      }
+    this.socket.getlist().subscribe((m: any) => {
+      this.listValue = m
     })
     this.colName = String(this.roomlist)
     this.getProducts()
   }
 
-  changeChannel(){
+  changeChannel() {
     this.getProducts()
 
   }
 
-  changeList():void {
+  changeList(): void {
     this.colName = String(this.roomlist)
     this.getProducts()
   }
 
 
-  insertProduct():void {
-    this.socket.add({value: this.value, valueTwo: this.value,user:this.user,image:this.imageName,channel:this.channelList},this.colName)
+  insertProduct(): void {
+    this.socket.add({
+      value: this.value,
+      valueTwo: this.value,
+      user: this.user,
+      image: this.imageName,
+      channel: this.channelList
+    }, this.colName)
     this.getProducts()
   }
 
 
-  deleteProduct(product: ProdModel){
-    this.socket.productDelete({value: product.value},this.colName)
+  deleteProduct(product: ProdModel) {
+    this.socket.productDelete({value: product.value}, this.colName)
     this.getProducts()
   };
 
 
+  getRole(): void {
+    this.socket.getuser().subscribe((m: any) => {
+      for (let p = 0; p < m.length; p++) {
+        if (m[p].name == this.user) {
+          this.role = m[p].role.toString()
+
+        }
+      }
+    })
+  }
 }
+

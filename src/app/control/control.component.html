@@ -6,18 +6,20 @@
 
 
       <h2> Users</h2>
+
           <table>
-            <tr *ngFor="let prod of valu; let i= index">
+            <tr *ngFor="let prod of testing; let i= index">
               <td> {{prod.name}}</td>
               <td> {{prod.email}}</td>
               <td>
-              <form >
-                <h1> </h1>
-                <label for="{{role[i]}}">{{prod.role}}:</label>
-                <select (change)="updateProduct(prod.name,role[i])" [(ngModel)]="role[i]" [ngModelOptions]="{standalone: true}" name="{{role[i]}}" id="{{role[i]}}">
+              <form>
+
+                <select (change)="updateProduct(prod.name,prod.role)" [(ngModel)]="prod.role" selected="prod.role" [ngModelOptions]="{standalone: true}" name="prod.role" id="prod.role">
                   <option value="superAdmin">superAdmin</option>
                   <option value="Admin">Admin</option>
                   <option value="user">User</option>
+
+
                 </select>
               </form>
 

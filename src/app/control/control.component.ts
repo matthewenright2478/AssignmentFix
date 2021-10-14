@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {ClientService} from "../client.service";
 import {ProdModel,account} from "../prodModel";
 import { SocketsService } from '../sockets.service'
+
 @Component({
   selector: 'app-control',
   templateUrl: './control.component.html',
@@ -34,48 +35,30 @@ export class ControlComponent implements OnInit {
   valuess = {}
   valu:any[]=[]
   rabbits:any[]=[]
+  testing:any;
 
   constructor(private socket: SocketsService,private dataService: DataService,private prodService: ClientService, private router: Router) { }
 
-
+// Initiates when the server starts. Starts the connection to the socket using the method this.socket.InitSocket, and retrieves the data using this.getProducts function //
   ngOnInit(): void {
     this.socket.initSocket();
     this.getProducts()
-
   }
 
+   // Receives the data about the list of users from this.socket.getuser method within the socket server //
   getProducts(): void {
-    this.socket.getuser().subscribe(m => {
-        this.rabbits = []
-        this.valu =[]
-        this.rabbits.push(m)
-        for (let i = 0; i < this.rabbits[0].length; i++) {
-          this.valu.push(this.rabbits[0][i])
-        }
-      })
+    this.socket.getuser().subscribe((m:any)=> {
+        this.testing = m })
   }
 
 
-
-
-  insertProduct():void {
-    this.prodService.productInsert({value: this.value, valueTwo: this.value},this.colName).subscribe(data => {
-      this.getProducts()
-    })
-    this.getProducts()
-  }
-
-  sendMessage(){
-    this.router.navigateByUrl('')
-  }
-
-
-
+  // This function uses the method from socket service called socket.product Delete. This deletes the selected value //
   deleteProduct(product: ProdModel){
     this.socket.productDelete({value: product.value},this.colName)
     this.getProducts()
   };
 
+  // This function uses the method from socket service called this.socket.productUpdate were it updates the desired data by sending the new name and role into this method. //
   updateProduct(currentValue:any,valueNew:any){
     let current:any = {'name':currentValue}
     const neww:any = {'role':valueNew}
@@ -83,10 +66,7 @@ export class ControlComponent implements OnInit {
     this.getProducts()
   }
 
-
-
+  // This function is used to go back to the chat page using the method this.router.navigateUrl() //
   back():void{
-    this.router.navigateByUrl('')
-  }
-
+    this.router.navigateByUrl('')}
 }

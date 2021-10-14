@@ -5,7 +5,7 @@
 
 
       <form>
-        <h1> Please Log In </h1>
+        <h1> Please Create an Account </h1>
         <div class="form-outline mb-4">
           <input type="email" [(ngModel)]="username" name="username"  id="username" class="form-control" />
           <label class="form-label" for="username">Username</label>
@@ -17,18 +17,22 @@
           <label class="form-label" for="email">Email</label>
         </div>
 
+        <span>
 
         <form>
           <select class="selector" (change)="imageChange()" [(ngModel)]="imageName"  id="imageName" name="imageName">
             <option *ngFor="let message of images"> {{message}} </option>
           </select>
 
+
         </form>
         <img height='75' width='75' src='{{imageFull}}'>
+        </span>
         <br>
         <br>
+        <p> {{message}}</p>
         <button type="submit" (click)="insertProduct()" class="btn btn-primary btn-block">CHANGE </button>
-        <button type="submit" (click)="change()" class="btn btn-primary btn-block">BACK </button>
+        <button type="submit" (click)="back()" class="btn btn-primary btn-block">BACK </button>
       </form>
 
 
